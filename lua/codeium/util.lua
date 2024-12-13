@@ -85,6 +85,15 @@ function M.get_project_root()
 end
 
 function M.get_uri(path)
+	if  string.match(path, '^%w+://') then
+		path = path:gsub('^%w+://', '/tmp/')
+	end
+	if string.match(path, '^[%.]$') then
+		path = path:gsub('.', '/tmp')
+	end
+	if string.match(path, '^$') then
+		path = '/tmp'
+	end
 	local info = io.get_system_info()
 	if info.is_windows then
 		path = path:gsub("\\", "/")
